@@ -1,6 +1,6 @@
 <?php
 
-$title = "Ecommerce - liste des voitures -";
+$title = "Ecommerce - valider mise a jour voiture -";
 ob_start();
 
     //COONEXION A LE BASE de DONNÉES
@@ -16,7 +16,7 @@ ob_start();
         die("Erreur de connexion a PDO MySQL :" .$exception->getMessage());
     }
 
-//Recuperation de input name = logo
+
 if(isset($_POST['logo']) && !empty($_POST['logo'])){
     $logo = htmlspecialchars(strip_tags($_POST['logo']));
 }else{
@@ -39,30 +39,30 @@ if(isset($_POST['prix']) && !empty($_POST['prix'])){
     echo "<p class='alert-danger'>Erreur, merci de remplir le champ prix du produit</p>";
 }
 
-//j'écris la reqète SQL insert into pour rajouter une voiture
+$sql="UPDATE voiture SET logo=?, marque=?, prix=? WHERE id_voiture = ?";
+//verification des parametres avant execution
+$requete = $BD->prepare($sql);
+// ?=1 
+$requete->bindParam(1, $logo);
+$requete->bindParam(2, $marque);
+$requete->bindParam(3, $prix);
 
-$sql = "INSERT INTO voiture (logo, marque, prix ) VALUES (?,?,?)";
-//Creation d'une requète péparée avec la fonction prepare de PDO qui execute la requète SQL
-$requete_insertion = $BD->prepare($sql);
+$id = $_GET['id_maj'];
+var_dump($id);
 
-$requete_insertion->bindParam(1, $logo);
-$requete_insertion->bindParam(2, $marque);
-$requete_insertion->bindParam(3, $prix);
+$res=$requete->execute(array($logo, $marque, $prix, $id));
 
-
-
-//Si l'insertion fonctionne
-if($requete_insertion->execute(array($logo, $marque, $prix,))){
+var_dump($res);
+if($res){
     //Message de réusite + bouton de retour à la liste
     echo "<p class='alert-success'>Votre voiture à bien été ajouté !</p>";
     echo "<a href='listevoitures.php' class='btn btn-outline-success'>Retour à la liste des produit</a>";
 }else{
     echo "<p class='alert-danger'>Erreur: Merci de remplir tous les champs</p>";
 }
-?>
 
-<?php
+
+//Appel du template
 $content = ob_get_clean();
-//Rappel du template sur chaque page
 require "template.php";
 ?>

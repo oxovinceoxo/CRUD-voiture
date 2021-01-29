@@ -28,10 +28,10 @@ ob_start();
 <!---------------- FILTRE ------------->
 <div class="form-group">
     <label for="exampleFormControlSelect1">FILTRE</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="choix">
-      <option value="1">Tri: Prix croissants</option>
-      <option value="2">Tri: Prix decroissants</option>
-      <option value="3">Tri: marques</option>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>Tri: Prix croissants</option>
+      <option>Tri: Prix decroissants</option>
+      <option>Tri: marques</option>
     </select>
   </div>
 
@@ -57,9 +57,7 @@ while ($donnees = $reponse->fetch())
     <td><img src="<?= $donnees['logo'] ?>" alt="<?= $donnees['logo'] ?>" title="<?= $donnees['logo'] ?>"/></td>
     <td><?php echo $donnees['marque'] ?></td>
     <td><?php echo $donnees['prix'] ?> €</td>
-    <td><a href="detailsProduit.php?id_voiture=<?= $donnees['id_voiture']  ?> " class="btn btn-success">Détails du produits</a></td>
-    <td><a href="majProduit.php?id_maj=<?= $donnees['id_voiture'] ?>" class="btn btn-info">Mettre à jour le produits</a></td>
-    <td><a href="suprProduit.php?id=<?= $donnees['id_voiture'] ?>" class="btn btn-danger">Supprimer le produits</a></td>
+    
 </tr>
 <?php
 }
