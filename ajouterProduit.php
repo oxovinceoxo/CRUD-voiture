@@ -25,13 +25,13 @@ ob_start();
     <!--LOGO DU PRODUIT-->
     <div class="form-group">
         <label for="logo">Logo de la voiture</label>
-        <!--ICI on recup l'attibut name et sa valeur avec $_POST['image_produit']-->
+        <!--ICI on recup l'attibut name et sa valeur avec $_POST['logo']-->
         <input type="text" class="form-control" id="logo" name="logo" required>
     </div>
 
     <!--MARQUE DE LA VOITURE-->
     <div class="form-group">
-        <!--ICI on recup l'attibut name et sa valeur avec $_POST['description_produit']-->
+        <!--ICI on recup l'attibut name et sa valeur avec $_POST['marque']-->
         <label for="marque">Marque de la voiture</label>
         <textarea rows="2" class="form-control" id="marque" name="marque" required></textarea>
     </div>
@@ -39,7 +39,7 @@ ob_start();
     <!--PRIX DE LA VOITURE-->
     <div class="form-group">
         <label for="prix">Prix du produit</label>
-        <!--ICI on recup l'attibut name et sa valeur avec $_POST['prix_produit']-->
+        <!--ICI on recup l'attibut name et sa valeur avec $_POST['prix']-->
         <input type="text"  step="4" class="form-control" id="prix" name="prix" required>
     </div>
 

@@ -15,8 +15,8 @@ try {
     die("Erreur de connexion a PDO MySQL :" . $exception->getMessage());
 }
 
-?>
 
+?>
 <div class="text-center">
     <h1 class="text-dark text-center">le bon coin des voitures</h1>
     <h2 class="text-warning text-info">espace d'administration</h2>
@@ -25,7 +25,7 @@ try {
 </div>
 
 <!---------------- FILTRE ------------->
-<form action="filtre.php" method="POST">
+<form action="filtre" method="POST">
     <div class="form-group">
         <label for="filtre">FILTRE</label>
         <select class="form-control" name="choix">
@@ -48,16 +48,47 @@ try {
         </tr>
     </thead>
 
-    <?php
+    
 
-//--------requet SQL connexion a la base de donnée puis lister les voiture avec la boucle While-------//
-    $reponse = $BD->query('SELECT * FROM voiture');
+
+
+<?php
+if (isset($_POST['choix']))
+{
+$choix = $_POST['choix'];
+if ($choix==1)
+{
+echo 
+
+$reponse = $BD->query('SELECT * FROM voiture ORDER BY prix ASC');
+while ($donnees = $reponse->fetch())
+
+{
+?>
+
+    <tr>
+        <td><img src="<?= $donnees['logo'] ?>" alt="<?= $donnees['logo'] ?>" title="<?= $donnees['logo'] ?>" /></td>
+        <td><?php echo $donnees['marque'] ?></td>
+        <td><?php echo $donnees['prix'] ?> €</td>
+        <td><a href="detailsProduit.php?id_voiture=<?= $donnees['id_voiture']  ?> " class="btn btn-success">Détails du produits</a></td>
+        <td><a href="majProduit.php?id_maj=<?= $donnees['id_voiture'] ?>" class="btn btn-info">Mettre à jour le produits</a></td>
+        <td><a href="suprProduit.php?id=<?= $donnees['id_voiture'] ?>" class="btn btn-danger">Supprimer le produits</a></td>
+    </tr>
+<?php
+}
+?>
+ <?php
+}
+elseif ($choix==2)
+{
+    echo 
+
+    $reponse = $BD->query('SELECT * FROM voiture ORDER BY prix DESC');
     while ($donnees = $reponse->fetch())
-
-    // test echo '<p>' . $donnees ['logo'] . '-' . $donnees ['marque'] . '-' . $donnees ['prix'] .'</p>';
+    
     {
     ?>
-
+    
         <tr>
             <td><img src="<?= $donnees['logo'] ?>" alt="<?= $donnees['logo'] ?>" title="<?= $donnees['logo'] ?>" /></td>
             <td><?php echo $donnees['marque'] ?></td>
@@ -69,10 +100,32 @@ try {
     <?php
     }
     ?>
-
-
-
     <?php
+}
+elseif ($choix==3)
+{
+    $reponse = $BD->query('SELECT * FROM voiture ORDER BY marque ASC');
+while ($donnees = $reponse->fetch())
+
+{
+?>
+
+    <tr>
+        <td><img src="<?= $donnees['logo'] ?>" alt="<?= $donnees['logo'] ?>" title="<?= $donnees['logo'] ?>" /></td>
+        <td><?php echo $donnees['marque'] ?></td>
+        <td><?php echo $donnees['prix'] ?> €</td>
+        <td><a href="detailsProduit.php?id_voiture=<?= $donnees['id_voiture']  ?> " class="btn btn-success">Détails du produits</a></td>
+        <td><a href="majProduit.php?id_maj=<?= $donnees['id_voiture'] ?>" class="btn btn-info">Mettre à jour le produits</a></td>
+        <td><a href="suprProduit.php?id=<?= $donnees['id_voiture'] ?>" class="btn btn-danger">Supprimer le produits</a></td>
+    </tr>
+<?php
+}}
+?>
+
+
+<?php
+}
+
     $content = ob_get_clean();
     //Rappel du template sur chaque page
     require "template.php";
